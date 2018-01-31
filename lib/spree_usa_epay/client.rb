@@ -51,10 +51,10 @@ module SpreeUsaEpay
     end
 
     #http://wiki.usaepay.com/developer/soap-1.4/methods/runcustomertransaction
-    def capture(payment, creditcard, gateway_options)
+    def capture(payment, ref_num, gateway_options)
       response = request(:capture_transaction, { 'Token' => security_token(gateway_options),
-                                                 'RefNum' => payment.response_code,
-                                                 'Amount' => payment.amount })
+                                                 'RefNum' => ref_num,
+                                                 'Amount' => double_money(payment) })
       billing_response response[:capture_transaction_response][:capture_transaction_return]
     end
 
